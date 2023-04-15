@@ -1,7 +1,24 @@
 import React from "react";
+import CalendarList from "./CalendarList";
 
 export default class Calendar extends React.Component {
-    state = { meetings: [], }
+    state = {
+        meetings: [],
+        error: '',
+    }
+
+    componentDidMount() {
+        this.loadMeetings()
+            .then(meetingsArray => {
+                this.setState(
+                    { meetings: meetingsArray }
+                )
+            })
+            .catch(error =>
+                this.setState(
+                    { error }
+                ));
+    }
 
     loadMeetings() {
         const options = { method: 'GET' };
@@ -29,11 +46,16 @@ export default class Calendar extends React.Component {
 
                 throw new Error('Network error!');
             })
-            .then(response => console.log(response))
+        // .then(response => console.log(response))
     }
 
-
     render() {
-        return <h1>Test</h1>
+        const { meetings } = this.state;
+
+        return (
+            <>
+                <CalendarList meetings={meetings} />
+            </>
+        )
     }
 }
