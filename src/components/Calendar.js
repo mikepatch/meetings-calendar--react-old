@@ -1,5 +1,9 @@
 import React from "react";
+
 import CalendarList from "./CalendarList";
+import CalendarForm from "./CalendarForm";
+
+import "./calendar.css";
 
 export default class Calendar extends React.Component {
     state = {
@@ -18,6 +22,10 @@ export default class Calendar extends React.Component {
                 this.setState(
                     { error }
                 ));
+    }
+
+    getMeetingsFormData(data) {
+        console.log(data);
     }
 
     loadMeetings() {
@@ -53,9 +61,10 @@ export default class Calendar extends React.Component {
         const { meetings } = this.state;
 
         return (
-            <>
+            <div className="app">
+                <CalendarForm onSubmit={this.getMeetingsFormData} />
                 <CalendarList meetings={meetings} />
-            </>
+            </div>
         )
     }
 }
