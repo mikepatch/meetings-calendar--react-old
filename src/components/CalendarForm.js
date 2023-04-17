@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./calendarForm.css";
+import FormField from "./FormField";
 
 export default class CalendarForm extends React.Component {
     state = {
@@ -9,6 +10,7 @@ export default class CalendarForm extends React.Component {
         email: '',
         date: '',
         time: '',
+        testInput: '',
         errors: {},
     }
 
@@ -85,7 +87,7 @@ export default class CalendarForm extends React.Component {
     }
 
     render() {
-        const { firstName, lastName, email, date, time, errors } = this.state;
+        const { firstName, lastName, email, date, time, testInput, errors } = this.state;
 
         return (
             <form
@@ -97,61 +99,60 @@ export default class CalendarForm extends React.Component {
                     <h2>Meetings form</h2>
                     <p>Enter your meeting details</p>
                 </header>
-                <div>
-                    <label htmlFor="first_name">First name</label>
-                    <input
-                        type="text"
-                        id="first_name"
-                        name="firstName"
-                        value={firstName}
-                        onChange={this.handleInputChange}
-                    />
-                    {errors.firstName && <span>{errors.firstName}</span>}
-                </div>
-                <div>
-                    <label htmlFor="last_name">Last name</label>
-                    <input
-                        type="text"
-                        id="last_name"
-                        name="lastName"
-                        value={lastName}
-                        onChange={this.handleInputChange}
-                    />
-                    {errors.lastName && <span>{errors.lastName}</span>}
-                </div>
-                <div>
-                    <label htmlFor="email">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={email}
-                        onChange={this.handleInputChange}
-                    />
-                    {errors.email && <span>{errors.email}</span>}
-                </div>
-                <div>
-                    <label htmlFor="date">Date</label>
-                    <input
-                        type="text"
-                        id="date"
-                        name="date"
-                        value={date}
-                        onChange={this.handleInputChange}
-                    />
-                    {errors.date && <span>{errors.date}</span>}
-                </div>
-                <div>
-                    <label htmlFor="time">Time</label>
-                    <input
-                        type="text"
-                        id="time"
-                        name="time"
-                        value={time}
-                        onChange={this.handleInputChange}
-                    />
-                    {errors.time && <span>{errors.time}</span>}
-                </div>
+                <FormField
+                    id='test'
+                    label='testLabel'
+                    type='text'
+                    name='testInput'
+                    value={testInput}
+                    onChange={this.handleInputChange}
+                />
+                <FormField
+                    id="first_name"
+                    label='First name'
+                    type="text"
+                    name="firstName"
+                    value={firstName}
+                    onChange={this.handleInputChange}
+                    errorMessage={errors.firstName}
+                />
+                <FormField
+                    id="last_name"
+                    label='Last name'
+                    type="text"
+                    name="lastName"
+                    value={lastName}
+                    onChange={this.handleInputChange}
+                    errorMessage={errors.lastName}
+                />
+                <FormField
+                    id="email"
+                    label='Email'
+                    type="email"
+                    name="email"
+                    value={email}
+                    onChange={this.handleInputChange}
+                    errorMessage={errors.email}
+                />
+                <FormField
+                    id="date"
+                    label='Date'
+                    type="date"
+                    name="date"
+                    value={date}
+                    onChange={this.handleInputChange}
+                    errorMessage={errors.date}
+                />
+                <FormField
+                    id="time"
+                    label='Time'
+                    type="time"
+                    name="time"
+                    value={time}
+                    onChange={this.handleInputChange}
+                    errorMessage={errors.time}
+                />
+
                 <div>
                     <button type="submit">Add meeting</button>
                 </div>
