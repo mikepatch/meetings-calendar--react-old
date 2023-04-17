@@ -25,13 +25,12 @@ export default class CalendarForm extends React.Component {
         event.preventDefault();
         const { onSubmit } = this.props;
         const { firstName, lastName, email, date, time } = this.state;
-        const data = { firstName, lastName, email, date, time };
 
         const errors = this.validateInputs();
         if (Object.keys(errors).length > 0) {
             this.setState({ errors });
         } else {
-            onSubmit(data);
+            onSubmit({ firstName, lastName, email, date, time });
             this.clearInputs();
         }
     }
@@ -41,21 +40,21 @@ export default class CalendarForm extends React.Component {
         const { firstName, lastName, email, date, time } = this.state;
 
         if (!firstName) {
-            errors.firstName = "First name is required";
+            errors.firstName = "First name is required.";
         } else if (firstName.length < 2) {
             errors.firstName = "First name should contains at least 2 characters."
         }
 
         if (!lastName) {
-            errors.lastName = "Last name is required";
+            errors.lastName = "Last name is required.";
         } else if (lastName.length < 2) {
             errors.firstName = "Last name should contains at least 2 characters."
         }
 
         if (!email) {
-            errors.email = "Email is required";
+            errors.email = "Email is required.";
         } else if (!/\S+@\S+\.\S+/.test(email)) {
-            errors.email = "Email is invalid";
+            errors.email = "Email is invalid.";
         }
 
         if (!date) {

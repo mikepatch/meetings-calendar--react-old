@@ -2,17 +2,22 @@ import React from "react";
 
 import CalendarList from "./CalendarList";
 import CalendarForm from "./CalendarForm";
+import { DB_API as meetingsData } from "../DB_API";
 
 import "./calendar.css";
 
 export default class Calendar extends React.Component {
-    state = {
-        meetings: [],
-        error: '',
+    constructor() {
+        super();
+        this.meetingsData = new meetingsData();
+        this.state = {
+            meetings: [],
+            error: '',
+        };
     }
 
     componentDidMount() {
-        this.loadMeetings()
+        this.meetingsData.loadData()
             .then(meetingsArray => {
                 this.setState(
                     { meetings: meetingsArray }
@@ -24,45 +29,25 @@ export default class Calendar extends React.Component {
                 ));
     }
 
-    getMeetingsFormData(data) {
-        console.log(data);
-    }
-
-    loadMeetings() {
-        const options = { method: 'GET' };
-
-        return this._fetch(options);
-    }
-
-    addMeeting(data) {
-        const options = {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: { "Content-Type": "application/json" }
-        }
-
-        return this._fetch(options)
-    }
-
-    _fetch(options, additionalPath = '') {
-        const API_URL = 'http://localhost:3005/meetings';
-        const url = API_URL + additionalPath;
-
-        return fetch(url, options)
-            .then(response => {
-                if (response.ok) return response.json();
-
-                throw new Error('Network error!');
+    handleSubmit = (data) => {
+        this.meetingsData.addData(data)
+            .then(newMeeting => {
+                this.setState({
+                    meetings: [...this.state.meetings, newMeeting],
+                });
             })
-        // .then(response => console.log(response))
+            .catch(error => console.error('error:', error))
     }
 
     render() {
-        const { meetings } = this.state;
+        const { meetings, error } = this.state;
 
         return (
             <div className="app">
-                <CalendarForm onSubmit={this.getMeetingsFormData} />
+                {error && (
+                    <h1>An error occurred: {error.message}</h1>
+                )}
+                <CalendarForm onSubmit={this.handleSubmit} />
                 <CalendarList meetings={meetings} />
             </div>
         )
