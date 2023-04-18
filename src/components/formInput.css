@@ -1,0 +1,13 @@
+.form__input {
+    border: 1px solid rgba(128, 128, 128, 0.363);
+    border-radius: 4px;
+}
+
+.form__input:focus-within {
+    border: 1px solid aquamarine;
+    outline: 1px solid aquamarine;
+}
+
+.form__input--error {
+    border: 1px solid tomato;
+}

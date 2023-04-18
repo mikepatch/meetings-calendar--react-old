@@ -1,0 +1,9 @@
+.form__field {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__error {
+    color: tomato;
+    text-align: center;
+}
