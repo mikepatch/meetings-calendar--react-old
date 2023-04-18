@@ -3,9 +3,32 @@
     flex-direction: column;
 }
 
-.form__error {
-    color: tomato;
+.form__errors-list {
+    font-size: .9rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
     text-align: center;
+
+    position: relative;
+    z-index: -1;
+}
+
+.form__errors-item {
+    animation: error .3s ease-out;
+    color: tomato;
+}
+
+@keyframes error {
+    from {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .form__input-group {

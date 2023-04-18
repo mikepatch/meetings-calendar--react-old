@@ -1,15 +1,22 @@
 .form__input {
-    border: 1px solid rgba(128, 128, 128, 0.4);
+    /* border: 1px solid rgba(128, 128, 128, 0.4); */
+    border: none;
+    outline: 1px solid rgba(128, 128, 128, 0.4);
     border-radius: 4px;
+    background-color: #fff;
     box-sizing: border-box;
+    padding: .5em;
     width: 100%;
+    overflow: hidden;
+    position: relative;
 }
 
-.form__input:focus-within {
-    border: 1px solid aquamarine;
-    outline: 1px solid aquamarine;
+.form__input:focus-within:not(.form__input--error) {
+    border: none;
+    outline: 2px solid aquamarine;
 }
 
 .form__input--error {
     border: 1px solid tomato;
+    outline: none;
 }
