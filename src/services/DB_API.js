@@ -14,9 +14,15 @@ export class DB_API {
             method: 'POST',
             body: JSON.stringify(data),
             headers: { "Content-Type": "application/json" }
-        }
+        };
 
         return this._fetch(options)
+    }
+
+    filterData(name, value) {
+        const options = { method: 'GET', };
+
+        return this._fetch(options, `?${name}_like=${value}`)
     }
 
     _fetch(options, additionalPath = '') {

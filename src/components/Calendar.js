@@ -3,14 +3,14 @@ import React from "react";
 import CalendarList from "./CalendarList";
 import CalendarForm from "./CalendarForm";
 
-import { DB_API as meetingsData } from ".././services/DB_API";
+import { DB_API as MeetingsData } from ".././services/DB_API";
 
 import "./calendar.css";
 
 export default class Calendar extends React.Component {
     constructor() {
         super();
-        this.meetingsData = new meetingsData();
+        this.meetingsData = new MeetingsData();
         this.state = {
             meetings: [],
             error: '',

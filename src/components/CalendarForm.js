@@ -2,11 +2,14 @@ import React from "react";
 
 import FormField from "./FormField";
 
+import { DB_API as MeetingsData } from ".././services/DB_API";
+
 import "./calendarForm.css";
 
 export default class CalendarForm extends React.Component {
     constructor() {
         super();
+        this.meetingsData = new MeetingsData();
         this.state = {
             firstName: '',
             lastName: '',
@@ -14,6 +17,7 @@ export default class CalendarForm extends React.Component {
             date: '',
             time: '',
             errors: {},
+            autocomplete: {},
         }
     }
 
@@ -24,7 +28,29 @@ export default class CalendarForm extends React.Component {
         this.setState({
             [name]: value,
             errors: { ...this.state.errors, [name]: null },
+            autocomplete: { ...this.state.autocomplete, [name]: null }
         });
+
+        this.autocomplete(name, value);
+    }
+
+    autocomplete = (name, value) => {
+        if (value.length !== 0) {
+            this.meetingsData.filterData(name, value)
+                .then(filteredItems => {
+                    const result = filteredItems.map(item => {
+                        return { id: item.id, result: item[name], }
+                    })
+
+                    this.setState({
+                        autocomplete: { ...this.state.autocomplete, [name]: result }
+                    })
+                })
+        }
+    }
+
+    handleAutoFill = () => {
+        console.log('autofill');
     }
 
     handleSubmit = event => {
@@ -91,7 +117,7 @@ export default class CalendarForm extends React.Component {
     }
 
     render() {
-        const { firstName, lastName, email, date, time, errors } = this.state;
+        const { firstName, lastName, email, date, time, errors, autocomplete } = this.state;
         const { title, description } = this.props;
 
         return (
@@ -99,6 +125,7 @@ export default class CalendarForm extends React.Component {
                 className="form"
                 onSubmit={this.handleSubmit}
                 noValidate
+                autoComplete="off"
             >
                 <header>
                     {title && <h2>{title}</h2>}
@@ -112,6 +139,8 @@ export default class CalendarForm extends React.Component {
                     value={firstName}
                     onChange={this.handleInputChange}
                     errorMessage={errors.firstName}
+                    autocompleteData={autocomplete.firstName}
+                    onClick={this.handleAutoFill}
                 />
                 <FormField
                     id="last_name"
@@ -121,6 +150,7 @@ export default class CalendarForm extends React.Component {
                     value={lastName}
                     onChange={this.handleInputChange}
                     errorMessage={errors.lastName}
+                    autocompleteData={autocomplete.lastName}
                 />
                 <FormField
                     id="email"
@@ -130,6 +160,8 @@ export default class CalendarForm extends React.Component {
                     value={email}
                     onChange={this.handleInputChange}
                     errorMessage={errors.email}
+                    autocompleteData={autocomplete.email}
+
                 />
                 <FormField
                     id="date"

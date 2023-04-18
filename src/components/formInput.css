@@ -1,6 +1,8 @@
 .form__input {
-    border: 1px solid rgba(128, 128, 128, 0.363);
+    border: 1px solid rgba(128, 128, 128, 0.4);
     border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .form__input:focus-within {
