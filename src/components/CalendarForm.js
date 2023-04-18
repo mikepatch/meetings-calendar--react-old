@@ -10,7 +10,6 @@ export default class CalendarForm extends React.Component {
         email: '',
         date: '',
         time: '',
-        testInput: '',
         errors: {},
     }
 
@@ -50,7 +49,7 @@ export default class CalendarForm extends React.Component {
         if (!lastName) {
             errors.lastName = "Last name is required.";
         } else if (lastName.length < 2) {
-            errors.firstName = "Last name should contains at least 2 characters."
+            errors.lastName = "Last name should contains at least 2 characters."
         }
 
         if (!email) {
@@ -87,7 +86,7 @@ export default class CalendarForm extends React.Component {
     }
 
     render() {
-        const { firstName, lastName, email, date, time, testInput, errors } = this.state;
+        const { firstName, lastName, email, date, time, errors } = this.state;
 
         return (
             <form
@@ -99,14 +98,6 @@ export default class CalendarForm extends React.Component {
                     <h2>Meetings form</h2>
                     <p>Enter your meeting details</p>
                 </header>
-                <FormField
-                    id='test'
-                    label='testLabel'
-                    type='text'
-                    name='testInput'
-                    value={testInput}
-                    onChange={this.handleInputChange}
-                />
                 <FormField
                     id="first_name"
                     label='First name'
