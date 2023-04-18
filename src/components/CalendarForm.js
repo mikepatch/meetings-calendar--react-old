@@ -1,17 +1,22 @@
 import React from "react";
 
-import "./calendarForm.css";
 import FormField from "./FormField";
 
+import "./calendarForm.css";
+
 export default class CalendarForm extends React.Component {
-    state = {
-        firstName: '',
-        lastName: '',
-        email: '',
-        date: '',
-        time: '',
-        errors: {},
+    constructor() {
+        super();
+        this.state = {
+            firstName: '',
+            lastName: '',
+            email: '',
+            date: '',
+            time: '',
+            errors: {},
+        }
     }
+
 
     handleInputChange = event => {
         const { name, value } = event.target;
@@ -87,6 +92,7 @@ export default class CalendarForm extends React.Component {
 
     render() {
         const { firstName, lastName, email, date, time, errors } = this.state;
+        const { title, description } = this.props;
 
         return (
             <form
@@ -95,8 +101,8 @@ export default class CalendarForm extends React.Component {
                 noValidate
             >
                 <header>
-                    <h2>Meetings form</h2>
-                    <p>Enter your meeting details</p>
+                    {title && <h2>{title}</h2>}
+                    {description && <p>{description}</p>}
                 </header>
                 <FormField
                     id="first_name"

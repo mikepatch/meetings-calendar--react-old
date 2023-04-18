@@ -1,7 +1,8 @@
 import React from "react";
 
-import "./formField.css";
 import FormInput from "./FormInput";
+
+import "./formField.css";
 
 export default class FormField extends React.Component {
     render() {
@@ -12,7 +13,7 @@ export default class FormField extends React.Component {
                 <FormInput
                     className={`form__input ${errorMessage ? 'form__input--error' : ''}`}
                     id={id}
-                    placeholder={`Enter your ${label.toLowerCase()}`}
+                    placeholder={`Enter ${label.toLowerCase()}`}
                     {...inputProps}
                 />
                 {errorMessage && <small className="form__error">{errorMessage}</small>}

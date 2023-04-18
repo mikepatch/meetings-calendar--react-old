@@ -2,7 +2,8 @@ import React from "react";
 
 import CalendarList from "./CalendarList";
 import CalendarForm from "./CalendarForm";
-import { DB_API as meetingsData } from "../DB_API";
+
+import { DB_API as meetingsData } from ".././services/DB_API";
 
 import "./calendar.css";
 
@@ -47,7 +48,11 @@ export default class Calendar extends React.Component {
                 {error && (
                     <h1>An error occurred: {error.message}</h1>
                 )}
-                <CalendarForm onSubmit={this.handleSubmit} />
+                <CalendarForm
+                    title={'Meetings form'}
+                    description={'Enter your meeting details'}
+                    onSubmit={this.handleSubmit}
+                />
                 <CalendarList meetings={meetings} />
             </div>
         )

@@ -28,6 +28,5 @@ export class DB_API {
 
                 throw new Error('Network error!');
             })
-        // .then(response => console.log(response))
     }
 }

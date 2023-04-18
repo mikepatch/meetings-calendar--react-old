@@ -1,20 +1,20 @@
 {
-    "meetings": [
-        {
-            "firstName": "John",
-            "lastName": "Doe",
-            "email": "john@doe.not",
-            "date": "2022-01-01",
-            "time": "10:00",
-            "id": 1
-        },
-        {
-            "firstName": "Mariusz",
-            "lastName": "Testowy",
-            "email": "mariusz@testowy.not",
-            "date": "2022-01-02",
-            "time": "12:00",
-            "id": 2
-        }
-    ]
+  "meetings": [
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john@doe.not",
+      "date": "2022-01-01",
+      "time": "10:00",
+      "id": 1
+    },
+    {
+      "firstName": "test",
+      "lastName": "test",
+      "email": "TestUser@gmail.com",
+      "date": "2023-04-20",
+      "time": "15:36",
+      "id": 2
+    }
+  ]
 }
