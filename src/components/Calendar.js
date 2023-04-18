@@ -5,6 +5,7 @@ import CalendarForm from "./CalendarForm";
 
 import { DB_API as MeetingsData } from ".././services/DB_API";
 
+import fields from "../utilities/formFields.json";
 import "./calendar.css";
 
 export default class Calendar extends React.Component {
@@ -51,6 +52,7 @@ export default class Calendar extends React.Component {
                 <CalendarForm
                     title={'Meetings form'}
                     description={'Enter your meeting details'}
+                    fields={fields}
                     onSubmit={this.handleSubmit}
                 />
                 <CalendarList meetings={meetings} />
