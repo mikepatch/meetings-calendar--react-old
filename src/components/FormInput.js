@@ -3,8 +3,7 @@ import React from "react";
 import "./formInput.css"
 
 export default class FormInput extends React.Component {
-    handleFocus() {
-    }
+
 
     render() {
         const { className, id, onFocus, onBlur, ...attributes } = this.props;

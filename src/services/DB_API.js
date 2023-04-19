@@ -16,23 +16,25 @@ export class DB_API {
             headers: { "Content-Type": "application/json" }
         };
 
-        return this._fetch(options)
+        return this._fetch(options);
     }
 
-    filterData(name, value) {
+    getFilteredData(keyName, value) {
         const options = { method: 'GET', };
 
-        return this._fetch(options, `?${name}_like=${value}`)
+        return this._fetch(options, `?${keyName}_like=${value}`);
     }
 
     _fetch(options, additionalPath = '') {
         const url = this.rootURL + additionalPath;
 
-        return fetch(url, options)
-            .then(response => {
-                if (response.ok) return response.json();
+        return (
+            fetch(url, options)
+                .then(response => {
+                    if (response.ok) return response.json();
 
-                throw new Error('Network error!');
-            })
+                    throw new Error('Network error!');
+                })
+        );
     }
 }

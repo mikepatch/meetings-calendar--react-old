@@ -24,23 +24,22 @@ export default class FormField extends React.Component {
     render() {
         const { showAutoComplete } = this.state;
         const { id, label, errorsMessages, autocompleteData, onMouseDown, ...inputProps } = this.props;
-        const errorMessage = errorsMessages && errorsMessages.map(
-            error =>
-                <li
-                    key={error}
-                    className="form__errors-item"
-                >
-                    {error}
-                </li>)
-        const autocompleteItems = autocompleteData &&
-            autocompleteData.map(item =>
-                <li
-                    key={item.id}
-                    onMouseDown={() => onMouseDown(item)}
-                >
-                    {item.result}
-                </li>
-            );
+        const errorMessage = errorsMessages && errorsMessages.map(error => (
+            <li
+                key={error}
+                className="form__errors-item"
+            >
+                {error}
+            </li>
+        ));
+        const autocompleteItems = autocompleteData && autocompleteData.map(result => (
+            <li
+                key={result.id}
+                onMouseDown={() => onMouseDown(result)}
+            >
+                {result.content}
+            </li>
+        ));
 
         return (
             <div className="form__field">

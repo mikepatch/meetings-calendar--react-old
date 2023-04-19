@@ -5,6 +5,7 @@ import FormField from "./FormField";
 import { DB_API as MeetingsData } from ".././services/DB_API";
 
 import "./calendarForm.css";
+import Autocomplete from "../services/Autocomplete";
 
 export default class CalendarForm extends React.Component {
     constructor(props) {
@@ -21,7 +22,6 @@ export default class CalendarForm extends React.Component {
         }
         this.fields = props.fields;
     }
-
 
     handleInputChange = event => {
         const { name, value } = event.target;
@@ -43,24 +43,21 @@ export default class CalendarForm extends React.Component {
         this.autocomplete(name, value);
     }
 
-    autocomplete = (name, value) => {
-        this.meetingsData.filterData(name, value)
-            .then(filteredItems => {
-                const result = value.length !== 0 && filteredItems.map(item => {
-                    return { id: item.id, inputName: name, result: item[name], }
-                })
-
+    autocomplete = (inputName, value) => {
+        new Autocomplete().getItems(inputName, value)
+            .then(result => {
                 this.setState({
-                    autocomplete: { ...this.state.autocomplete, [name]: result, }
-                })
+                    autocomplete: { ...this.state.autocomplete, [inputName]: result, }
+                });
             })
+            .catch(error => console.error('An error occurred', error))
     }
 
-    handleAutoFill = ({ inputName, result: value }) => {
+    handleAutocomplete = ({ inputName, content: value }) => {
         this.setState(() => {
             return {
                 [inputName]: value,
-            }
+            };
         });
     }
 
@@ -129,21 +126,20 @@ export default class CalendarForm extends React.Component {
     render() {
         const { errors, autocomplete } = this.state;
         const { title, description } = this.props;
-        const formFields = this.fields.map(
-            ({ id, label, type, name, }) =>
-                <FormField
-                    key={id}
-                    id={id}
-                    label={label}
-                    type={type}
-                    name={name}
-                    value={this.state[name]}
-                    onChange={this.handleInputChange}
-                    errorsMessages={(errors[name] && errors[name].length !== 0) && errors[name]}
-                    autocompleteData={autocomplete[name]}
-                    onMouseDown={this.handleAutoFill}
-                />
-        );
+        const formFields = this.fields.map(({ id, label, type, name, }) => (
+            <FormField
+                key={id}
+                id={id}
+                label={label}
+                type={type}
+                name={name}
+                value={this.state[name]}
+                onChange={this.handleInputChange}
+                errorsMessages={(errors[name] && errors[name].length !== 0) && errors[name]}
+                autocompleteData={autocomplete[name]}
+                onMouseDown={this.handleAutocomplete}
+            />
+        ));
 
         return (
             <form
@@ -152,12 +148,12 @@ export default class CalendarForm extends React.Component {
                 noValidate
                 autoComplete="off"
             >
-                <header>
-                    {title && <h2>{title}</h2>}
-                    {description && <p>{description}</p>}
+                <header className="form__header">
+                    {title && <h2 className="form__title">{title}</h2>}
+                    {description && <p className="form__description">{description}</p>}
                 </header>
                 {formFields}
-                <div>
+                <div className="form__button">
                     <button type="submit">Add meeting</button>
                 </div>
             </form>

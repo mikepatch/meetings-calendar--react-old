@@ -1,5 +1,6 @@
 .form__field {
     display: flex;
+    flex-basis: 50%;
     flex-direction: column;
 }
 
