@@ -1,18 +1,21 @@
 .form__field {
     display: flex;
-    flex-basis: 50%;
     flex-direction: column;
+    gap: .3em;
+    margin: .6em 0;
+    width: 100%;
+}
+
+.form__field:has(.form__input--error) {
+    margin: 0;
 }
 
 .form__errors-list {
-    font-size: .9rem;
+    font-size: 1rem;
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin-top: .2em;
     text-align: center;
-
-    position: relative;
-    z-index: -1;
 }
 
 .form__errors-item {

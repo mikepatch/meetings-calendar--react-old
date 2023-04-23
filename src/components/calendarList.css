@@ -1,9 +1,10 @@
-.meetings-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2em;
-    justify-content: center;
+.meetings__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5em;
+    justify-items: start;
     list-style-type: none;
-    margin: 0;
+    margin: 2em 0;
     padding: 0;
+    width: 100%;
 }

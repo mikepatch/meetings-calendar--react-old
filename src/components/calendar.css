@@ -1,11 +1,26 @@
-.app {
-    align-items: center;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    gap: 4em;
-    justify-content: center;
-    margin: 0 auto;
-    max-width: 1280px;
+.calendar {
+    display: grid;
+    font-size: clamp(0.75rem, 0.75rem + 1.5vw, 1rem);
+    grid-template-columns: 1fr;
+}
+
+.calendar__form-panel {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .04), 0 2px 4px -1px rgba(0, 0, 0, .03);
+    z-index: 999;
+}
+
+.calendar__meetings-panel {
+    background-color: #fff;
+    padding: 1em;
+}
+
+@media (min-width: 600px) {
+    .calendar {
+        grid-template-columns: minmax(280px, 350px) repeat(auto-fit, minmax(280px, 1fr));
+        min-height: 100vh;
+    }
+
+    .calendar__form-panel {
+        box-shadow: 4px 0 6px -1px rgba(0, 0, 0, .04), 4px 0 4px -1px rgba(0, 0, 0, .03);
+    }
 }

@@ -12,18 +12,18 @@ export default class FormField extends React.Component {
     handleInputBlur = () => {
         this.setState({
             showAutoComplete: false,
-        })
+        });
     }
 
     handleInputFocus = () => {
         this.setState({
             showAutoComplete: true,
-        })
+        });
     }
 
     render() {
         const { showAutoComplete } = this.state;
-        const { id, label, errorsMessages, autocompleteData, onMouseDown, ...inputProps } = this.props;
+        const { id, label, errorsMessages, autocompleteData, setAutocomplete, ...inputProps } = this.props;
         const errorMessage = errorsMessages && errorsMessages.map(error => (
             <li
                 key={error}
@@ -35,7 +35,7 @@ export default class FormField extends React.Component {
         const autocompleteItems = autocompleteData && autocompleteData.map(result => (
             <li
                 key={result.id}
-                onMouseDown={() => onMouseDown(result)}
+                onMouseDown={() => setAutocomplete(result)}
             >
                 {result.content}
             </li>

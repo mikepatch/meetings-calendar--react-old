@@ -13,28 +13,39 @@ export class DB_API {
         const options = {
             method: 'POST',
             body: JSON.stringify(data),
-            headers: { "Content-Type": "application/json" }
+            headers: this._getHeaders()
         };
 
         return this._fetch(options);
     }
 
-    getFilteredData(keyName, value) {
+    removeData(id) {
+        const options = {
+            method: 'DELETE',
+            headers: this._getHeaders()
+        };
+
+        return this._fetch(options, `/${id}`);
+    }
+
+    filterData(keyName, value) {
         const options = { method: 'GET', };
 
         return this._fetch(options, `?${keyName}_like=${value}`);
     }
 
+    _getHeaders() {
+        return { "Content-Type": "application/json" };
+    }
+
     _fetch(options, additionalPath = '') {
         const url = this.rootURL + additionalPath;
 
-        return (
-            fetch(url, options)
-                .then(response => {
-                    if (response.ok) return response.json();
+        return fetch(url, options)
+            .then(response => {
+                if (response.ok) return response.json();
 
-                    throw new Error('Network error!');
-                })
-        );
+                throw new Error('Network error!');
+            });
     }
 }
