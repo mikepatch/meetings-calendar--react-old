@@ -8,8 +8,8 @@ export default class CalendarItem extends React.Component {
 
         // eslint-disable-next-line no-restricted-globals
         const confirmed = confirm('Are you sure to remove meeting?');
-        if (confirmed) return onRemove(id);
-        else return;
+
+        confirmed && onRemove(id);
     }
 
     render() {

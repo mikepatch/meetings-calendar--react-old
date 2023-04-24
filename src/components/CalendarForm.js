@@ -2,14 +2,12 @@ import React from "react";
 
 import FormField from "./FormField";
 
-import { DB_API as MeetingsData } from ".././services/DB_API";
-
 import "./calendarForm.css";
+import FormValidator from "../utilities/FormValidator";
 
 export default class CalendarForm extends React.Component {
     constructor(props) {
         super();
-        this.meetingsData = new MeetingsData();
         this.state = {
             firstName: '',
             lastName: '',
@@ -20,6 +18,7 @@ export default class CalendarForm extends React.Component {
             autocomplete: {},
         }
         this.fields = props.fields;
+        this.formValidator = new FormValidator();
     }
 
     handleInputChange = event => {
@@ -38,7 +37,7 @@ export default class CalendarForm extends React.Component {
 
     checkInputs(name, value) {
         const currentField = this.fields.find(field => field.name === name);
-        const fieldErrors = this.validateField(currentField, value);
+        const fieldErrors = this.formValidator.validateField(currentField, value);
 
         if (value.length > 2) {
             this.setState(state => {
@@ -52,51 +51,27 @@ export default class CalendarForm extends React.Component {
     handleSubmit = event => {
         event.preventDefault();
         const { onSubmit } = this.props;
-        const { firstName, lastName, email, date, time } = this.state;
+        const form = event.target;
 
-        const errors = this.validateFields();
-        const areErrorsEmpty = () => {
-            const errorsArr = Object.values(errors).filter(error => error.length !== 0);
+        this.formValidator.validate(form, this.fields);
+        const errors = this.formValidator.errors;
 
-            if (errorsArr.length !== 0) return true;
-            else return false;
-        }
-
-        if (areErrorsEmpty()) {
-            this.setState({ errors });
-        } else {
-            onSubmit({ firstName, lastName, email, date, time });
+        if (this.formValidator.areFieldsValid()) {
+            onSubmit(this.getFormData());
             this.clearInputs();
+        } else {
+            this.setState({ errors });
         }
     }
 
-    validateFields = () => {
-        const errors = {};
-
-        this.fields.forEach(field => {
-            const inputValue = this.state[field.name]
-            const fieldErrors = this.validateField(field, inputValue);
-
-            errors[field.name] = fieldErrors;
+    getFormData = () => {
+        const formData = {};
+        
+        this.fields.forEach(({ name: fieldName }) => {
+            formData[fieldName] = this.state[fieldName];
         });
 
-        return errors;
-    };
-
-    validateField(field, inputValue) {
-        const errors = [];
-        const { label, required, pattern, errorMessage } = field;
-
-        if (required) {
-            if (inputValue.length === 0) errors.push(`${label} is required.`);
-        }
-
-        if (inputValue.length > 0 && pattern) {
-            const reg = new RegExp(pattern);
-            if (!reg.test(inputValue)) errors.push(errorMessage);
-        }
-
-        return errors;
+        return formData;
     }
 
     clearInputs() {

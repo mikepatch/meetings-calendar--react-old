@@ -1,15 +1,15 @@
-export class DB_API {
+export default class MeetingsProvider {
     constructor() {
         this.rootURL = 'http://localhost:3005/meetings';
     }
 
-    loadData() {
+    load() {
         const options = { method: 'GET' };
 
         return this._fetch(options);
     }
 
-    addData(data) {
+    add(data) {
         const options = {
             method: 'POST',
             body: JSON.stringify(data),
@@ -19,7 +19,7 @@ export class DB_API {
         return this._fetch(options);
     }
 
-    removeData(id) {
+    remove(id) {
         const options = {
             method: 'DELETE',
             headers: this._getHeaders()
@@ -28,7 +28,7 @@ export class DB_API {
         return this._fetch(options, `/${id}`);
     }
 
-    filterData(keyName, value) {
+    filter(keyName, value) {
         const options = { method: 'GET', };
 
         return this._fetch(options, `?${keyName}_like=${value}`);

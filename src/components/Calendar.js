@@ -3,17 +3,17 @@ import React from "react";
 import CalendarList from "./CalendarList";
 import CalendarForm from "./CalendarForm";
 
-import { DB_API as MeetingsData } from ".././services/DB_API";
+import MeetingsProvider from "../services/MeetingsProvider";
 
 import fields from "../utilities/formFields.json";
-import Autocomplete from "../services/Autocomplete";
+import Autocomplete from "../utilities/Autocomplete";
 
 import "./calendar.css";
 
 export default class Calendar extends React.Component {
     constructor() {
         super();
-        this.meetingsData = new MeetingsData();
+        this.meetingsData = new MeetingsProvider();
         this.state = {
             meetings: [],
             error: '',
@@ -25,7 +25,7 @@ export default class Calendar extends React.Component {
     }
 
     insertMeetings() {
-        this.getDataFromAPI()
+        this.meetingsData.load()
             .then(meetingsArray => {
                 this.setState(
                     { meetings: meetingsArray }
@@ -39,7 +39,7 @@ export default class Calendar extends React.Component {
     }
 
     handleSubmit = data => {
-        this.postDataToAPI(data)
+        this.meetingsData.add(data)
             .then(newMeeting => {
                 this.changeState('meetings', [newMeeting]);
                 this.showSuccess(newMeeting);
@@ -51,6 +51,13 @@ export default class Calendar extends React.Component {
         return alert(`You have added a new meeting with: ${firstName} ${lastName}`);
     }
 
+    handleRemove = id => {
+        this.meetingsData.remove(id)
+            .then(() => this.insertMeetings());
+    }
+
+    getAutocompleteData = (inputName, value) => new Autocomplete().getFilteredItems(inputName, value);
+
     changeState(stateName, propertiesToChange) {
         this.setState(state => {
             return {
@@ -58,19 +65,6 @@ export default class Calendar extends React.Component {
             };
         });
     }
-
-    getDataFromAPI = () => this.meetingsData.loadData();
-
-    postDataToAPI = data => this.meetingsData.addData(data);
-
-    removeDataFromAPI = id => (
-        this.meetingsData.removeData(id)
-        .then(() => this.insertMeetings())
-    )
-
-    getAutocompleteData = (inputName, value) => (
-        new Autocomplete().getFilteredItems(inputName, value)
-    )
 
     render() {
         const { meetings, error } = this.state;
@@ -93,7 +87,7 @@ export default class Calendar extends React.Component {
                             < CalendarList
                                 title='Meetings'
                                 meetings={meetings}
-                                onRemove={this.removeDataFromAPI}
+                                onRemove={this.handleRemove}
                             />
                             :
                             <h2>There are no upcoming meetings.</h2>
