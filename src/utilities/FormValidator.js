@@ -27,12 +27,4 @@ export default class FormValidator {
 
     return errors;
   }
-
-  areFieldsValid() {
-    const errorsArr = Object.values(this.errors).filter(
-      (error) => error.length !== 0
-    );
-
-    return errorsArr.length !== 0 ? false : true;
-  }
 }
