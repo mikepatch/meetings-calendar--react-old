@@ -63,11 +63,7 @@ export default class CalendarForm extends React.Component {
   };
 
   areErrorsEmpty(errors) {
-    const errorsArr = Object.values(errors).filter(
-      (error) => error.length !== 0
-    );
-
-    return errorsArr.length === 0 ? true : false;
+    return Object.values(errors).every((error) => error.length === 0);
   }
 
   getFormData = () => {

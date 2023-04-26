@@ -13,7 +13,7 @@ import "./calendar.css";
 export default class Calendar extends React.Component {
   constructor() {
     super();
-    this.meetingsData = new MeetingsProvider();
+    this.meetingsProvider = new MeetingsProvider();
     this.autocomplete = new Autocomplete();
     this.state = {
       meetings: [],
@@ -26,7 +26,7 @@ export default class Calendar extends React.Component {
   }
 
   insertMeetings() {
-    this.meetingsData
+    this.meetingsProvider
       .load()
       .then((meetingsArray) => {
         this.setState({ meetings: meetingsArray });
@@ -37,7 +37,7 @@ export default class Calendar extends React.Component {
   }
 
   handleSubmit = (data) => {
-    this.meetingsData
+    this.meetingsProvider
       .add(data)
       .then((newMeeting) => {
         this.changeState("meetings", [newMeeting]);
@@ -51,7 +51,7 @@ export default class Calendar extends React.Component {
   }
 
   handleRemove = (id) => {
-    this.meetingsData.remove(id).then(() => this.insertMeetings());
+    this.meetingsProvider.remove(id).then(() => this.insertMeetings());
   };
 
   getAutocompleteData = (inputName, value) =>
